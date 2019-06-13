@@ -69,7 +69,7 @@ class ProjectManager extends Instructor {
   }
 }
 
-//Examples and objects using the above classes
+//Objects using the above classes
 const fred = new Instructor({
   name: 'Fred',
   location: 'Bedrock',
@@ -128,3 +128,25 @@ const mary = new ProjectManager({
   favLanguage: 'Javascript',
   catchPhrase: 'That looks AWESOME',
 });
+
+//Using above objects in examples
+
+//Instructors
+console.log(fred.name);
+fred.speak();
+fred.demo('Javascript Arrays');
+console.log(dan.specialty);
+dan.grade(brandon, 'Javascript Arrays');
+
+//Students
+console.log(brandon.name);
+console.log(brandon.previousBackground);
+brandon.listsSubjects();
+isaiah.PRAssignment('Preprocessing');
+isaiah.sprintChallenge('Preprocessing');
+
+//Project Managers
+console.log(marguel.name);
+console.log(marguel.gradClassName);
+marguel.standUp('#help');
+mary.debugCode(brandon, 'Javascript Classes');
