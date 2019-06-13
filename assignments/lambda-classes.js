@@ -1,6 +1,8 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-console */
 // CODE here for your Lambda Classes
+
+//Classes
 class Person {
   constructor(attributes) {
     this.age = attributes.age;
@@ -66,3 +68,63 @@ class ProjectManager extends Instructor {
     console.log(`${this.name} debugs ${student.name}'s code on ${subject}`);
   }
 }
+
+//Examples and objects using the above classes
+const fred = new Instructor({
+  name: 'Fred',
+  location: 'Bedrock',
+  age: 37,
+  favLanguage: 'JavaScript',
+  specialty: 'Front-end',
+  catchPhrase: `Don't forget the homies`,
+});
+
+const dan = new Instructor({
+  name: 'Dan',
+  age: Infinity,
+  location: 'Denver',
+  specialty: 'Relentless Debugger',
+  favLanguage:
+    'JavaScript, Python, Elm, ReasonML, SmallTalk, Haskell, C#, Java, Rust, Go, Ruby, Crystal, Elixir, Lua, and Julia',
+  catchPhrase: 'If you can do the thing, you can get paid to do the thing!',
+});
+
+const brandon = new Student({
+  name: 'Brandon',
+  age: 26,
+  location: 'California',
+  previousBackground: 'Retail',
+  className: 'WEB21',
+  favSubjects: ['HTML', 'CSS', 'Javascript'],
+});
+
+const isaiah = new Student({
+  name: 'Isaiah',
+  age: 18,
+  location: 'Florida',
+  previousBackground: 'High School last month',
+  className: 'Web21',
+  favSubjects: ['Html', 'CSS', 'JavaScript'],
+});
+
+const marguel = new ProjectManager({
+  name: 'Marguel',
+  age: 'Maybe 26',
+  gradClassName: 'WEBPT2',
+  favInstructor: 'Me?',
+  location: 'California',
+  specialty: 'React',
+  favLanguage: 'JavaScript, Python, Elm etc.',
+  catchPhrase: 'Practice Flex Zombies !!!',
+});
+
+const mary = new ProjectManager({
+  name: 'Mary',
+  age: '24',
+  gradClassName: 'WEB18',
+  favInstructor: 'Josh Knell',
+  location: 'New York',
+  specialty: 'Express and Node.js',
+  favLanguage: 'Javascript',
+  catchPhrase: 'That looks AWESOME',
+});
