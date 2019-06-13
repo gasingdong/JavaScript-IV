@@ -28,15 +28,17 @@ Prototype Refactor
   * destroy() // prototype method that returns: `${this.name} was removed from the game.`
 */
 
-function GameObject(attributes) {
-  this.createdAt = attributes.createdAt;
-  this.name = attributes.name;
-  this.dimensions = attributes.dimensions;
-}
+class GameObject {
+  constructor(attributes) {
+    this.createdAt = attributes.createdAt;
+    this.name = attributes.name;
+    this.dimensions = attributes.dimensions;
+  }
 
-GameObject.prototype.destroy = function() {
-  return `${this.name} was removed from the game.`;
-};
+  destroy() {
+    return `${this.name} was removed from the game.`;
+  }
+}
 
 /*
     === CharacterStats ===
@@ -45,15 +47,16 @@ GameObject.prototype.destroy = function() {
     * should inherit destroy() from GameObject's prototype
   */
 
-function CharacterStats(attributes) {
-  GameObject.call(this, attributes);
-  this.healthPoints = attributes.healthPoints;
-}
+class CharacterStats extends GameObject {
+  constructor(attributes) {
+    super(attributes);
+    this.healthPoints = attributes.healthPoints;
+  }
 
-CharacterStats.prototype = Object.create(GameObject.prototype);
-CharacterStats.prototype.takeDamage = function() {
-  return `${this.name} took damage`;
-};
+  takeDamage() {
+    return `${this.name} took damage`;
+  }
+}
 
 /*
     === Humanoid (Having an appearance or character resembling that of a human.) ===
@@ -65,17 +68,18 @@ CharacterStats.prototype.takeDamage = function() {
     * should inherit takeDamage() from CharacterStats
   */
 
-function Humanoid(attributes) {
-  CharacterStats.call(this, attributes);
-  this.team = attributes.team;
-  this.weapons = attributes.weapons;
-  this.language = attributes.language;
-}
+class Humanoid extends CharacterStats {
+  constructor(attributes) {
+    super(attributes);
+    this.team = attributes.team;
+    this.weapons = attributes.weapons;
+    this.language = attributes.language;
+  }
 
-Humanoid.prototype = Object.create(CharacterStats.prototype);
-Humanoid.prototype.greet = function() {
-  return `${this.name} offers a greeting in ${this.language}`;
-};
+  greet() {
+    return `${this.name} offers a greeting in ${this.language}`;
+  }
+}
 
 /*
  * Inheritance chain: GameObject -> CharacterStats -> Humanoid
@@ -143,42 +147,42 @@ console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
 // * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
 // * Create two new objects, one a villain and one a hero and fight it out with methods!
 
-function Character(attributes) {
-  Humanoid.call(this, attributes);
-  this.ac = attributes.ac;
-  this.initiative = attributes.initiative;
-  this.attack = attributes.attack;
-  this.damage = attributes.damage;
-  this.damageDie = attributes.damageDie;
+class Character extends Humanoid {
+  constructor(attributes) {
+    super(attributes);
+    this.ac = attributes.ac;
+    this.initiative = attributes.initiative;
+    this.attack = attributes.attack;
+    this.damage = attributes.damage;
+    this.damageDie = attributes.damageDie;
+  }
+
+  //Characters attacking a specified target
+  doAttack(target) {
+    //Check to see if the attack roll meets the target's AC
+    if (rollDice(20, this.attack) >= target.ac) {
+      //If so, we roll damage
+      target.healthPoints -= rollDice(this.damageDie, this.damage);
+      console.log(target.takeDamage());
+
+      if (target.healthPoints <= 0) {
+        console.log(target.destroy());
+      }
+    } else {
+      console.log(`${this.name} misses!`);
+    }
+  }
+
+  //Characters rolling initiative (turn order)
+  rollInitiative() {
+    return rollDice(20, this.initiative);
+  }
 }
 
 //Roll dice by passing in number of sides and an optional bonus to the roll
 function rollDice(numSides, bonus = 0) {
   return Math.floor(Math.random() * (numSides + 1) + bonus);
 }
-
-Character.prototype = Object.create(Humanoid.prototype);
-
-//Characters attacking a specified target
-Character.prototype.doAttack = function(target) {
-  //Check to see if the attack roll meets the target's AC
-  if (rollDice(20, this.attack) >= target.ac) {
-    //If so, we roll damage
-    target.healthPoints -= rollDice(this.damageDie, this.damage);
-    console.log(target.takeDamage());
-
-    if (target.healthPoints <= 0) {
-      console.log(target.destroy());
-    }
-  } else {
-    console.log(`${this.name} misses!`);
-  }
-};
-
-//Characters rolling initiative (turn order)
-Character.prototype.rollInitiative = function() {
-  return rollDice(20, this.initiative);
-};
 
 const hero = new Character({
   createdAt: new Date(),
