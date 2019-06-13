@@ -30,6 +30,15 @@ class Instructor extends Person {
   grade(student, subject) {
     console.log(`${student.name} receives a perfect score on ${subject}`);
   }
+
+  //Stretch
+  randomlyGrade(student) {
+    const oldGrade = student.grade;
+    student.grade += Math.floor(Math.random() * 20 - 10);
+    console.log(
+      `${student.name}'s grade went from ${oldGrade} to ${student.grade}`
+    );
+  }
 }
 
 class Student extends Person {
@@ -38,6 +47,8 @@ class Student extends Person {
     this.previousBackground = attributes.previousBackground;
     this.className = attributes.className;
     this.favSubjects = attributes.favSubjects;
+    //Stretch
+    this.grade = attributes.grade;
   }
 
   listsSubjects() {
@@ -50,6 +61,15 @@ class Student extends Person {
 
   sprintChallenge(subject) {
     console.log(`${this.name} has begun a spring challenge for ${subject}`);
+  }
+
+  //Stretch
+  graduate() {
+    if (this.grade > 70) {
+      console.log(`Congratulations ${this.name}! You've graduated!`);
+    } else {
+      console.log(`Whoops! You're not ready to graduate yet! Back to work!`);
+    }
   }
 }
 
@@ -96,6 +116,8 @@ const brandon = new Student({
   previousBackground: 'Retail',
   className: 'WEB21',
   favSubjects: ['HTML', 'CSS', 'Javascript'],
+  //Stretch
+  grade: 70,
 });
 
 const isaiah = new Student({
@@ -105,6 +127,8 @@ const isaiah = new Student({
   previousBackground: 'High School last month',
   className: 'Web21',
   favSubjects: ['Html', 'CSS', 'JavaScript'],
+  //Stretch
+  grade: 70,
 });
 
 const marguel = new ProjectManager({
@@ -150,3 +174,9 @@ console.log(marguel.name);
 console.log(marguel.gradClassName);
 marguel.standUp('#help');
 mary.debugCode(brandon, 'Javascript Classes');
+
+//Stretch - Student Grading
+dan.randomlyGrade(brandon);
+dan.randomlyGrade(brandon);
+dan.randomlyGrade(brandon);
+brandon.graduate();
